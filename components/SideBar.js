@@ -13,17 +13,14 @@ const SideBar = () => {
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const menus = [
     { name: "Dashboard", click: "/dashboard/dashboard",  icon: MdOutlineDashboard },
-    { name: "Months", icon: MdCalendarMonth, submenu: true, submenuItems:[
-      {name: "Add Month", click: "/dashboard/months/addMonth" ,  icon: MdCalendarMonth},
-      {name: "Manage Month", click: "/dashboard/months/manageMonth", icon: MdCalendarMonth},
-    ] },
+    { name: "Months", click: "/dashboard/months/", icon: MdCalendarMonth },
     { name: "Meals",  icon:  GiMeal},
     { name: "Users",  icon: HiUsers },
     { name: "Log Out",  icon: FiLogOut,  margin: true  },
   ];
   
   return (
-      <div
+      <aside
         className={`bg-[#0e0e0e] min-h-screen ${
           open ? "w-72" : "w-16"
         } duration-500 text-gray-100 px-4`}
@@ -32,9 +29,7 @@ const SideBar = () => {
           <HiMenuAlt3
             size={26}
             className="cursor-pointer"
-            onClick={() => {
-              setOpen(!open) 
-              setSubmenuOpen(false)}}
+            onClick={() => setOpen(!open) }
           />
         </div>
         <div className="mt-4 flex flex-col gap-4 relative">
@@ -61,14 +56,6 @@ const SideBar = () => {
                     {menu?.name}
                 </h2>
                 </div>
-                {
-                  menu.submenu && (
-                    <div onClick={() => setSubmenuOpen(!submenuOpen)}>
-                      <HiOutlineChevronDown />
-                    </div>
-                    
-                  )
-                }
                 <h2
                   className={`${
                     open && "hidden"
@@ -77,32 +64,10 @@ const SideBar = () => {
                   {menu?.name}
                 </h2>
               </div>
-
-              {
-                 menu.submenu && submenuOpen && (
-                  <div  className='mt-4 flex flex-col gap-4'>
-                    {
-                      menu.submenuItems.map((submenuItem, i) => 
-                        <h2
-                        onClick={() => router.push(submenuItem?.click)}
-                          key={i}
-                          className='cursor-pointer font-medium hover:bg-amber-600 rounded p-2'
-                        >
-
-                          {submenuItem.name}
-                        </h2>
-                    )}
-                  </div>
-                  )
-                }
-              
             </div>
-            
-             
-            
           ))}
         </div>
-      </div>
+      </aside>
       
       
   )
