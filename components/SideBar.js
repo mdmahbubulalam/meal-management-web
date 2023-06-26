@@ -14,7 +14,7 @@ const SideBar = () => {
   const menus = [
     { name: "Dashboard", click: "/dashboard/dashboard",  icon: MdOutlineDashboard },
     { name: "Months", click: "/dashboard/months/", icon: MdCalendarMonth },
-    { name: "Meals",  icon:  GiMeal},
+    { name: "Meals", click: "/dashboard/meals/", icon:  GiMeal},
     { name: "Users",  icon: HiUsers },
     { name: "Log Out",  icon: FiLogOut,  margin: true  },
   ];

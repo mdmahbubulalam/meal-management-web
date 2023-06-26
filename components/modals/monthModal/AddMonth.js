@@ -4,11 +4,8 @@ import { useForm } from 'react-hook-form';
 const AddMonth = ({setAddModal, setSuccess, setError, months, setMonths}) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = async (data) => {
-        //const monthName = data.monthName;
 
-        const monthName = {
-            monthName: data.monthName,
-        }
+       
         const baseUrl = process.env.BASE_URL;
         const url = `${baseUrl}/months/addMonth`
     
@@ -20,13 +17,12 @@ const AddMonth = ({setAddModal, setSuccess, setError, months, setMonths}) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                monthName
+              monthName: data.monthName,
             }),
           });
     
           if (response.ok) {
             console.log('Month added successfully!');
-            setMonths({monthName,...months})
             setSuccess('Month added successfully!')
             setAddModal(false)
             // setLoading(false)

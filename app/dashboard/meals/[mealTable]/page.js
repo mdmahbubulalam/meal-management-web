@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { FaEdit } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
-import DeleteMonth from '@/components/modals/monthModal/DeleteMonth';
-import AddMonth from '@/components/modals/monthModal/AddMonth';
-import EditMonth from '@/components/modals/monthModal/EditMonth';
+import { useParams, useRouter } from 'next/navigation'
 
-
-
-const ManageMonth = () => {
-    const [months, setMonths] = useState([]);
+const MealTable = () => {
+    const params = useParams();
+    const router = useRouter();
+    const monthName = params.mealTable;
+    const [meals, setMeals] = useState([]);
+    const [latestMonth, setLatestMonth] = useState([])
     const [addModal, setAddModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
@@ -18,19 +18,34 @@ const ManageMonth = () => {
     const [success, setSuccess] = useState('');
     const [rowId, setRowId] = useState("")
     const baseUrl = process.env.BASE_URL;
-    const url = `${baseUrl}/months/allMonths`
+    const url = `${baseUrl}/meals/currentMonthMealInfo?monthName=${monthName}`
+
+    console.log(meals)
 
   
     const columns = [
         {
-            name: 'Id',
-            selector: row => row._id,
+            name: 'Date',
+            selector: row => row.date,
         },
         {
-            name: 'Month',
-            selector: row => row.monthName,
+            name: 'Name',
+            selector: row => row.userName,
             sortable: true,
         },
+
+        {
+          name: 'Expense',
+          selector: row => row.expense,
+          sortable: true,
+        },
+
+        {
+          name: 'Meal Count',
+          selector: row => row.mealCount,
+          sortable: true,
+        },
+
 
         {
            name: 'Action',
@@ -57,17 +72,14 @@ const ManageMonth = () => {
         }
     ];
 
-    useEffect(() => {
-        const fetchPost = async () => {
-          const res = await fetch(url)
-          const data = await res.json();
-          data.sort((a,b) => new Date(a) < new Date(b) ? 1 : -1)
-          setMonths(data);
-        }
-    
-        fetchPost();
-      },[])
-
+    useEffect(()=>{
+      const fetchPost = async () => {
+      const res = await fetch(url)
+      const data = await res.json();
+      setMeals(data.meal);
+    }
+    fetchPost()
+  },[monthName])
       
       const customStyle = {
         headCells : {
@@ -99,15 +111,15 @@ const ManageMonth = () => {
       {
         success && <p className='text-md text-green-600 text-center'>{success}</p>
       }
-      <button onClick={() => setAddModal(true)} className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Month</button>
+      <button onClick={() => router.push(`/dashboard/meals/${monthName}/userList`)}  className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Meal</button>
       <DataTable
             title = 'Manage Table'
             columns={columns}
-            data={months}
+            data={meals}
             customStyles={customStyle}
         />
 
-        {
+        {/* {
           deleteModal ?
             <DeleteMonth 
               months={months} 
@@ -124,8 +136,8 @@ const ManageMonth = () => {
         {
           addModal ? 
           <AddMonth
-            months={months}
-            setMonths={setMonths} 
+            months={month}
+            setMonths={setMonth} 
             setAddModal={setAddModal}
             setError ={setError}
             setSuccess ={setSuccess}
@@ -145,7 +157,7 @@ const ManageMonth = () => {
             months={months}
           />
           : null
-        }
+        } */}
 
        
 
@@ -153,4 +165,4 @@ const ManageMonth = () => {
   )
 }
 
-export default ManageMonth
+export default MealTable

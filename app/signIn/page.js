@@ -2,7 +2,7 @@
 import { UserContext } from '@/context/Contex';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
 
 
@@ -13,6 +13,7 @@ const SignIn = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [error, setError] = useState('');
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    
     const onSubmit = async (data) => {
         const email = data.email;
         const password = data.password;
@@ -38,6 +39,7 @@ const SignIn = () => {
               email:email
             }
             setLoggedInUser(userEmail)
+            
             console.log('User signed in successfully!');
             // setLoading(false)
             router.push(`/dashboard/dashboard`);
