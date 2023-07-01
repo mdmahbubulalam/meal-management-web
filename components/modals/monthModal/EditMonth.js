@@ -6,7 +6,6 @@ const EditMonth = ({setEditModal, rowId, setSuccess, setError}) => {
     const [month, setMonth] = useState([]);
     const baseUrl = process.env.BASE_URL;
     const url =  `${baseUrl}/months/${rowId}`
-    const url2 = `${baseUrl}/months/allMonths`
 
     useEffect(() => {
         const fetchPost = async () => {

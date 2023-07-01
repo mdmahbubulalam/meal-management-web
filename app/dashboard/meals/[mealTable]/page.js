@@ -4,14 +4,14 @@ import DataTable from 'react-data-table-component';
 import { FaEdit } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
 import { useParams, useRouter } from 'next/navigation'
+import EditMeal from '@/components/modals/mealModal/EditMeal';
+import DeleteMeal from '@/components/modals/mealModal/DeleteMeal';
 
 const MealTable = () => {
     const params = useParams();
     const router = useRouter();
     const monthName = params.mealTable;
     const [meals, setMeals] = useState([]);
-    const [latestMonth, setLatestMonth] = useState([])
-    const [addModal, setAddModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
     const [error, setError] = useState('');
@@ -19,8 +19,9 @@ const MealTable = () => {
     const [rowId, setRowId] = useState("")
     const baseUrl = process.env.BASE_URL;
     const url = `${baseUrl}/meals/currentMonthMealInfo?monthName=${monthName}`
+    
 
-    console.log(meals)
+    console.log(monthName)
 
   
     const columns = [
@@ -119,9 +120,9 @@ const MealTable = () => {
             customStyles={customStyle}
         />
 
-        {/* {
+{
           deleteModal ?
-            <DeleteMonth 
+            <DeleteMeal 
               months={months} 
               setMonths={setMonths} 
               rowId={rowId} 
@@ -133,34 +134,18 @@ const MealTable = () => {
 
         }
 
+
         {
-          addModal ? 
-          <AddMonth
-            months={month}
-            setMonths={setMonth} 
-            setAddModal={setAddModal}
+          editModal ? 
+          <EditMeal
+            rowId={rowId} 
+            setEditModal={setEditModal}
             setError ={setError}
             setSuccess ={setSuccess}
             
           />
           : null
         }
-
-{
-          editModal ? 
-          <EditMonth
-            rowId={rowId} 
-            setEditModal={setEditModal}
-            setError ={setError}
-            setSuccess ={setSuccess}
-            setMonths={setMonths} 
-            months={months}
-          />
-          : null
-        } */}
-
-       
-
     </section>
   )
 }

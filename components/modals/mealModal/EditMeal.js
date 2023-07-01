@@ -1,51 +1,55 @@
-import { useParams } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 
-const AddMeal = ({setAddModal, setSuccess, setError, userName , userEmail }) => {
-    const params = useParams();
-    const monthName = params.mealTable;
-    const { register, handleSubmit, formState: { errors } } = useForm();
+const EditMeal = ({setEditModal, rowId, setSuccess, setError}) => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [meal, setMeal] = useState([]);
     const baseUrl = process.env.BASE_URL;
-    const url = `${baseUrl}/meals/addMeal`
-    const onSubmit = async (data) => {
-        const dt = new Date(data.mealDate);
-        const x = dt.toISOString().split('T');
-        const x1 = x[0].split('-');
-        const dateSelected = x1[2] + '-' + x1[1] + '-' + x1[0];
+    const url =  `${baseUrl}/meals/${rowId}`
 
-        try {
-        //   setLoading(true)
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userName: userName,
-                userEmail: userEmail,
-                monthName: monthName,
-                expense: data.expense,
-                mealCount: data.mealCount,
-                date: dateSelected
-            }),
-          });
     
-          if (response.ok) {
-            console.log('Meal added successfully!');
-            setSuccess('Meal added successfully!')
-            setAddModal(false)
-            // setLoading(false)
-          } else {
-            console.log('Meal added failed!');
-            setError('Meal added failed!');
-            // setLoading(false)
-            
-          }
-        } catch (error) {
-          console.log(error);
+
+    useEffect(() => {
+        const fetchPost = async () => {
+        const res = await fetch(url)
+        const data = await res.json();
+        console.log(data);
         }
-    };
+        fetchPost();
+    },[rowId])
+
+
+    
+    const onSubmit = async (data) => {
+    
+      try {
+      //   setLoading(true)
+        const response = await fetch(url, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              expense: data.expense,
+              mealCount: data.mealCount,
+          }),
+        });
+  
+        if (response.ok) {
+          console.log('Meal added successfully!');
+          setSuccess('Meal added successfully!')
+          setAddModal(false)
+          // setLoading(false)
+        } else {
+          console.log('Meal added failed!');
+          setError('Meal added failed!');
+          // setLoading(false)
+          
+        }
+      } catch (error) {
+        console.log(error);
+      }
+  };
   return (
     <div>
         
@@ -75,21 +79,12 @@ const AddMeal = ({setAddModal, setSuccess, setError, userName , userEmail }) => 
                             <input {...register("mealCount", { required: true })} className="shadow border appearance-none  shadow-amber-500 rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:border-amber-500" id="mealCount" type="number" placeholder="Meal Count" />
                             {errors.mealCount && <p className="text-red-500 text-xs italic">Please add todays total meal.</p>}
                         </div>
-
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="mealDate">
-                                Todays date
-                            </label>
-                            <input {...register("mealDate", { required: true })} className="shadow border appearance-none  shadow-amber-500 rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:border-amber-500" id="mealDate"  type="date" placeholder="Meal date" />
-                            {errors.mealDate && <p className="text-red-500 text-xs italic">Please add todays date.</p>}
-                        </div>
-                        
                         
                         <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                             <button
                                 className="text-emerald-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                onClick={() => setAddModal(false)}
+                                onClick={() => setEditModal(false)}
                             >
                                 No
                             </button>
@@ -113,4 +108,4 @@ const AddMeal = ({setAddModal, setSuccess, setError, userName , userEmail }) => 
   )
 }
 
-export default AddMeal
+export default EditMeal

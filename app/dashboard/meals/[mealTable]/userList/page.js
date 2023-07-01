@@ -5,12 +5,10 @@ import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const UserList = () => {
-    const params = useParams();
-    const monthName = params.mealTable;
     const [users, setUsers] = useState([]);
     const [userName, setUserName] = useState([]);
     const [userEmail, setUserEmail] = useState([]);
-    const [addModal, setAddModal] = useState(false)
+    const [addModal, setAddModal] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const baseUrl = process.env.BASE_URL;
@@ -53,12 +51,11 @@ const UserList = () => {
             )
         }
 
-{
+        {
           addModal ? 
           <AddMeal
             userName={userName}
             userEmail={userEmail}
-            monthName={monthName} 
             setAddModal={setAddModal}
             setError ={setError}
             setSuccess ={setSuccess}
@@ -66,6 +63,8 @@ const UserList = () => {
           />
           : null
         }
+
+        
         
     </section>
   )
