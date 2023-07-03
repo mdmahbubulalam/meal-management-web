@@ -15,7 +15,7 @@ const SideBar = () => {
     { name: "Dashboard", click: "/dashboard/dashboard",  icon: MdOutlineDashboard },
     { name: "Months", click: "/dashboard/months/", icon: MdCalendarMonth },
     { name: "Meals", click: "/dashboard/meals/", icon:  GiMeal},
-    { name: "Users",  icon: HiUsers },
+    { name: "Users",  click: "/dashboard/members/", icon: HiUsers },
     { name: "Log Out",  icon: FiLogOut,  margin: true  },
   ];
   

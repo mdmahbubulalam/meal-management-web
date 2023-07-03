@@ -3,34 +3,32 @@ import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { FaEdit } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
-import DeleteMonth from '@/components/modals/monthModal/DeleteMonth';
-import AddMonth from '@/components/modals/monthModal/AddMonth';
-import EditMonth from '@/components/modals/monthModal/EditMonth';
+import DeleteMember from '@/components/modals/memberModal/DeleteMember';
+import EditMember from '@/components/modals/memberModal/EditMember';
 
 
-
-const ManageMonth = () => {
-    const [months, setMonths] = useState([]);
-    const [addModal, setAddModal] = useState(false)
+const MemberList = () => {
+    const [members, setMembers] = useState([]);
     const [editModal, setEditModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [rowId, setRowId] = useState('')
     const baseUrl = process.env.BASE_URL;
-    const url = `${baseUrl}/months/allMonths`
+    const url = `${baseUrl}/users/allUsers`
 
   
     const columns = [
         {
-            name: 'Id',
-            selector: row => row._id,
+            name: 'Name',
+            selector: row => row.username,
         },
         {
-            name: 'Month',
-            selector: row => row.monthName,
+            name: 'Email',
+            selector: row => row.email,
             sortable: true,
         },
+
 
         {
            name: 'Action',
@@ -57,17 +55,14 @@ const ManageMonth = () => {
         }
     ];
 
-    useEffect(() => {
-        const fetchPost = async () => {
-          const res = await fetch(url)
-          const data = await res.json();
-          data.sort((a,b) => new Date(a) < new Date(b) ? 1 : -1)
-          setMonths(data);
-        }
-    
-        fetchPost();
-      },[])
-
+    useEffect(()=>{
+      const fetchPost = async () => {
+      const res = await fetch(url)
+      const data = await res.json();
+      setMembers(data);
+    }
+    fetchPost()
+  },[])
       
       const customStyle = {
         headCells : {
@@ -99,20 +94,36 @@ const ManageMonth = () => {
       {
         success && <p className='text-md text-green-600 text-center'>{success}</p>
       }
-      <button onClick={() => setAddModal(true)} className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Month</button>
+      <button onClick={() => setAddModal(true)} className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Member</button>
       <DataTable
             title = 'Manage Table'
             columns={columns}
-            data={months}
+            data={members}
             customStyles={customStyle}
         />
 
+
+        {
+          editModal ? 
+          <EditMember
+            rowId={rowId} 
+            setEditModal={setEditModal}
+            setError ={setError}
+            setSuccess ={setSuccess}
+            members={members} 
+            setMembers={setMembers} 
+          />
+          : null
+        }
+
+
+
         {
           deleteModal ?
-            <DeleteMonth 
-              months={months} 
-              setMonths={setMonths} 
-              rowId={rowId} 
+            <DeleteMember 
+              rowId={rowId}
+              members={members} 
+              setMembers={setMembers} 
               setDeleteModal = {setDeleteModal}
               setError ={setError}
               setSuccess ={setSuccess}
@@ -120,37 +131,8 @@ const ManageMonth = () => {
             : null
 
         }
-
-        {
-          addModal ? 
-          <AddMonth
-            months={months}
-            setMonths={setMonths} 
-            setAddModal={setAddModal}
-            setError ={setError}
-            setSuccess ={setSuccess}
-            
-          />
-          : null
-        }
-
-{
-          editModal ? 
-          <EditMonth
-            rowId={rowId} 
-            setEditModal={setEditModal}
-            setError ={setError}
-            setSuccess ={setSuccess}
-            setMonths={setMonths} 
-            months={months}
-          />
-          : null
-        }
-
-       
-
     </section>
   )
 }
 
-export default ManageMonth
+export default MemberList

@@ -1,9 +1,9 @@
 import React from 'react'
 
-const DeleteMeal = ({meals, setMeals, rowId, setDeleteModal,setError, setSuccess}) => {
+const DeleteMember = ({members, setMembers, rowId, setDeleteModal,setError, setSuccess}) => {
   
     const baseUrl = process.env.BASE_URL;
-    const url =  `${baseUrl}/meals/${rowId}`
+    const url =  `${baseUrl}/users/${rowId}`
 
     const handleDelete = async () => {
       try {
@@ -13,15 +13,15 @@ const DeleteMeal = ({meals, setMeals, rowId, setDeleteModal,setError, setSuccess
         });
   
         if (response.ok) {
-          const filteredMeal = meals.filter((item) => item._id !== rowId);
-          setMeals(filteredMeal);
-          console.log('Meal Deleted successfully!');
-          setSuccess('Meal Deleted successfully!')
+          const filteredMember = members.filter((item) => item._id !== rowId);
+          setMembers(filteredMember);
+          console.log('Member Deleted successfully!');
+          setSuccess('Member Deleted successfully!')
           setDeleteModal(false)
           // setLoading(false)
         } else {
-          console.log('Failed to delete meal!');
-          setError('Failed to delete meal!');
+          console.log('Failed to delete member!');
+          setError('Failed to delete member!');
           // setLoading(false) 
         }
         
@@ -73,4 +73,4 @@ const DeleteMeal = ({meals, setMeals, rowId, setDeleteModal,setError, setSuccess
   )
 }
 
-export default DeleteMeal
+export default DeleteMember
