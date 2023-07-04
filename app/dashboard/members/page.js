@@ -16,12 +16,13 @@ const MemberList = () => {
     const [rowId, setRowId] = useState('')
     const baseUrl = process.env.BASE_URL;
     const url = `${baseUrl}/users/allUsers`
-
+    const ExpandedComponent = ({ data }) => <pre className='text-justify'>{JSON.stringify(data, null, 2)}</pre>;
   
     const columns = [
         {
             name: 'Name',
             selector: row => row.username,
+            sortable: true,
         },
         {
             name: 'Email',
@@ -94,12 +95,15 @@ const MemberList = () => {
       {
         success && <p className='text-md text-green-600 text-center'>{success}</p>
       }
-      <button onClick={() => setAddModal(true)} className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Member</button>
+      
       <DataTable
-            title = 'Manage Table'
+            title = 'Manage Member Table'
             columns={columns}
             data={members}
             customStyles={customStyle}
+            expandableRows
+            expandableRowsComponent={ExpandedComponent}
+            dense
         />
 
 

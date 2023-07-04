@@ -10,13 +10,18 @@ import { useRouter } from 'next/navigation';
 const SideBar = () => {
   const router = useRouter();
   const [open, setOpen] = useState(true);
-  const [submenuOpen, setSubmenuOpen] = useState(false);
+
+  const handleLogOut = () => {
+    localStorage.removeItem('userEmail')
+    router.push('/')
+  }
+  
   const menus = [
     { name: "Dashboard", click: "/dashboard/dashboard",  icon: MdOutlineDashboard },
     { name: "Months", click: "/dashboard/months/", icon: MdCalendarMonth },
     { name: "Meals", click: "/dashboard/meals/", icon:  GiMeal},
     { name: "Users",  click: "/dashboard/members/", icon: HiUsers },
-    { name: "Log Out",  icon: FiLogOut,  margin: true  },
+    { name: "Log Out", onClick: handleLogOut,  icon: FiLogOut,  margin: true  },
   ];
   
   return (
@@ -35,7 +40,10 @@ const SideBar = () => {
         <div className="mt-4 flex flex-col gap-4 relative">
           {menus?.map((menu, i) => (
             <div
-             onClick={() => menu?.click && router.push( menu?.click) }
+             onClick={() => {
+              menu?.click && router.push( menu?.click)
+              menu?.onClick && handleLogOut()
+            } }
 
               key={i}
               className={` ${

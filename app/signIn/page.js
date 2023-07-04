@@ -39,10 +39,9 @@ const SignIn = () => {
               email:email
             }
             setLoggedInUser(userEmail)
-            
             console.log('User signed in successfully!');
             // setLoading(false)
-            router.push(`/dashboard/dashboard`);
+              router.push(`/dashboard/dashboard`);
             // Additional actions after successful sign-in, such as navigating to another screen
           } else {
             setLoggedInUser('')

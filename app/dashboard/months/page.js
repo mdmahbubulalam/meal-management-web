@@ -20,6 +20,7 @@ const ManageMonth = () => {
     const baseUrl = process.env.BASE_URL;
     const url = `${baseUrl}/months/allMonths`
 
+    const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
   
     const columns = [
         {
@@ -29,7 +30,7 @@ const ManageMonth = () => {
         {
             name: 'Month',
             selector: row => row.monthName,
-            sortable: true,
+            sortable: true, 
         },
 
         {
@@ -77,7 +78,7 @@ const ManageMonth = () => {
             fontSize : '15px',
             color : 'gary',
             border : '2px',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
           }
         },
 
@@ -101,10 +102,13 @@ const ManageMonth = () => {
       }
       <button onClick={() => setAddModal(true)} className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Month</button>
       <DataTable
-            title = 'Manage Table'
+            title = 'Manage Month Table'
             columns={columns}
             data={months}
             customStyles={customStyle}
+            expandableRows
+            expandableRowsComponent={ExpandedComponent}
+            dense
         />
 
         {

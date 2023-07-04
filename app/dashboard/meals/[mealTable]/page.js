@@ -30,6 +30,7 @@ const MealTable = () => {
     const totalExpense = meals.reduce((accumulator, currentValue) => accumulator + currentValue.expense, initialValue);
     const totalMealCount = meals.reduce((accumulator, currentValue) => accumulator + currentValue.mealCount, initialValue);
     const mealRate = totalExpense/totalMealCount;
+    const ExpandedComponent = ({ data }) => <pre className='text-justify'>{JSON.stringify(data, null, 2)}</pre>;
     const columns = [
         {
             name: 'Date',
@@ -105,7 +106,7 @@ const MealTable = () => {
             fontSize : '15px',
             color : 'gary',
             border : '2px',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
           }
         },
 
@@ -114,13 +115,14 @@ const MealTable = () => {
             backgroundColor : '#F9FAFB',
             fontWeight : '500',
             fontSize : '15px',
-            color : '#788088'
+            color : '#788088',
           }
         },
       }
   return (
-    <section className='w-full flex gap-10'>
-      <div className='text-center justify-center'>
+    <section className='grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-4'>
+      <div className='lg:col-span-2 text-center'>
+        <div>
         {
           error && <p className='text-md text-red-600 text-center'>{error}</p>
         }
@@ -128,23 +130,35 @@ const MealTable = () => {
         {
           success && <p className='text-md text-green-600 text-center'>{success}</p>
         }
+       
+        
+        </div>
+
+        <div>
         <button onClick={() => router.push(`/dashboard/meals/${monthName}/userList`)}  className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Meal</button>
         <DataTable
-              title = 'Manage Table'
-              columns={columns}
-              data={meals}
-              customStyles={customStyle}
-          />
+                title = 'Manage Meal Table'
+                columns={columns}
+                data={meals}
+                customStyles={customStyle}
+                expandableRows
+                expandableRowsComponent={ExpandedComponent}
+                dense
+            />
+        </div>
+       
+          
+        
 
        
       </div>
       <div>
         <div className='bg-black p-4 text-white rounded'>
           <div className='pb-4'>
-            <h1 className='text-2xl pb-2'>SUMMERY</h1>
+            <h1 className='text-2xl pb-2 uppercase'>Summery of {monthName}</h1>
             <p className='text-base'>Total Meal : {totalMealCount} </p>
             <p className='text-base'>Total Expense : {totalExpense} </p>
-            <p className='text-base'>Meal rate : {mealRate} </p>
+            <p className='text-base'>Meal Rate : {mealRate} </p>
           </div>
           <hr/>
 

@@ -6,18 +6,16 @@ import SignIn from '../signIn/page';
 import SideBar from '@/components/SideBar';
 
 const DashboardLayout = ({children}) => {
-  const [userEmail, setUserEmail] = useState({})
+  //const [userEmail, setUserEmail] = useState({})
     const [loggedInUser] = useContext(UserContext);
-    const email = localStorage.getItem("userEmail");
-    localStorage.setItem("userEmail", JSON.stringify(loggedInUser.email));
+    const userEmail = localStorage.getItem("userEmail");
+    
 
     useEffect(() => {
 
-      if (typeof window !== 'undefined') {
-        const email = localStorage.getItem("userEmail");
-      setUserEmail(email)
-      } else {
-        console.log('')
+      const userEmail = JSON.stringify(loggedInUser.email)
+      if(userEmail){
+        localStorage.setItem("userEmail", userEmail);
       }
       
     },[])
