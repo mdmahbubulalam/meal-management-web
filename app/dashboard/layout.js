@@ -5,24 +5,26 @@ import React, { useContext, useEffect, useState } from 'react'
 import SignIn from '../signIn/page';
 import SideBar from '@/components/SideBar';
 import { getFromStorage } from '@/context/LocalStorage';
+import { useRouter } from 'next/navigation';
 
 const DashboardLayout = ({children}) => {
+    const router = useRouter()
     const [loggedInUser] = useContext(UserContext);
     const userEmail = JSON.parse(getFromStorage('userEmail'))
     console.log('fromLayout', userEmail)
     return (
       <section>
-        {
-          userEmail? 
+         { 
+         userEmail ?
           <aside className="flex gap-6">
               <SideBar/>
               <div className="m-3 text-xl text-gray-900 font-semibold">
                   {children}
               </div>
           </aside>
-          : 
-          <SignIn/>
-        }
+          :
+          router.push('/')
+         }
       </section>
   )
 }
