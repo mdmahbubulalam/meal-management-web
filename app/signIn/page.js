@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
+import { Spinner } from "@material-tailwind/react";
+import { saveToStorage } from '@/context/LocalStorage';
 
 
 
@@ -12,17 +14,18 @@ const SignIn = () => {
     
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState('');
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     
     const onSubmit = async (data) => {
         const email = data.email;
         const password = data.password;
-        console.log(data.email, data.password)
+        //console.log(data.email, data.password)
         const baseUrl = process.env.BASE_URL;
         const url = `${baseUrl}/auth/signIn`
     
         try {
-        //   setLoading(true)
+          setLoading(true)
           const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -39,8 +42,11 @@ const SignIn = () => {
               email:email
             }
             setLoggedInUser(userEmail)
+            const memberEmail = JSON.stringify(userEmail.email)
+            saveToStorage('userEmail', memberEmail)
+          
             console.log('User signed in successfully!');
-            // setLoading(false)
+            setLoading(false)
               router.push(`/dashboard/dashboard`);
             // Additional actions after successful sign-in, such as navigating to another screen
           } else {
@@ -48,7 +54,7 @@ const SignIn = () => {
             router.push(`/signIn`);
             console.log('Sign-in failed.');
             setError('Wrong username or password')
-            // setLoading(false)
+            setLoading(false)
             
             // Handle sign-in failure, such as displaying an error message
           }
@@ -59,7 +65,11 @@ const SignIn = () => {
     };
     return (
         <section className='flex justify-center mt-6'>
+         
             <div className="w-full max-w-xs ">
+                {
+                loading && <div className="flex justify-center"><Spinner className="h-10 w-10 text-blue-700/20" /></div>
+                }
                 <p className='text-md text-red-600 text-center pb-4'>{error}</p>
                 <form className="bg-white shadow-md shadow-amber-500 rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-4">

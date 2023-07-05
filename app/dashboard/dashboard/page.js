@@ -74,7 +74,9 @@ fetchPost()
       <div className='grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-10 mb-5 '>
         {
           members.map(member =>
+            
            <MemberMealInfo
+              key={member._id}
               email={member.email}
               userName={member.username}
               mealRate = {mealRate}

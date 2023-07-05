@@ -25,6 +25,7 @@ const MonthList = () => {
         {
             months.map( month=> 
                 <button 
+                key={month._id}
             onClick={() => router.push(`/dashboard/meals/${month.monthName}`)} 
             className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >

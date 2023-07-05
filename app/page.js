@@ -2,16 +2,15 @@
 import React, { useContext } from 'react'
 import SignIn from './signIn/page'
 import { UserContext } from '@/context/Contex';
-import SideBar from '@/SideBadr';
 
 
 const Home = () => {
   const [loggedInUser] = useContext(UserContext);
-  console.log(loggedInUser)
-  
+  const userEmail = JSON.parse(getFromStorage('userEmail'))
+
   return (
     <section>
-         {!loggedInUser.email && <SignIn/>}
+         {!userEmail && <SignIn/>}
     </section>
   )
 }

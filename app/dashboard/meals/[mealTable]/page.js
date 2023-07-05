@@ -7,6 +7,7 @@ import { useParams, useRouter } from 'next/navigation'
 import EditMeal from '@/components/modals/mealModal/EditMeal';
 import DeleteMeal from '@/components/modals/mealModal/DeleteMeal';
 import SummeryModal from '@/components/modals/summeryModal/SummeryModal';
+import MemberList from '../../members/page';
 
 
 const MealTable = () => {
@@ -168,7 +169,8 @@ const MealTable = () => {
               <button onClick={() => {
                 setSummeryModal(true)
                 setEmail(member.email)
-              }} 
+              }}
+              key={member._id} 
               className="w-full bg-amber-500 hover:bg-amber-600 text-white text-base font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Summery of {member.username}</button>
             </div>
           

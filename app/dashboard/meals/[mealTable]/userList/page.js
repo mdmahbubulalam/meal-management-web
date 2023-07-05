@@ -36,6 +36,7 @@ const UserList = () => {
         {
             users.map( user=> 
                 <div 
+                key = {user._id}
                   className='bg-amber-500 hover:bg-amber-600 text-white p-4 rounded'
                   onClick={()=>{
                     setAddModal(true)
