@@ -64,7 +64,7 @@ const AddMeal = ({setAddModal, setSuccess, setError, userName , userEmail }) => 
                             <label className="block text-gray-700 text-sm font-bold mb-2" for="expense">
                                 Todays expense
                             </label>
-                            <input {...register("expense", { required: true })} className="shadow border appearance-none  shadow-amber-500 rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:border-amber-500" id="expense" type="number" placeholder="Expense" />
+                            <input {...register("expense", { required: true, valueAsNumber: true, pattern:{value: /^(0|[1-9]\d*)(\.\d+)?$/}, })} className="shadow border appearance-none  shadow-amber-500 rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:border-amber-500" id="expense"  placeholder="Expense" />
                             {errors.expense && <p className="text-red-500 text-xs italic">Please add todays total expense.</p>}
                         </div>
 
@@ -72,7 +72,7 @@ const AddMeal = ({setAddModal, setSuccess, setError, userName , userEmail }) => 
                             <label className="block text-gray-700 text-sm font-bold mb-2" for="expense">
                                 Todays meal count
                             </label>
-                            <input {...register("mealCount", { required: true })} className="shadow border appearance-none  shadow-amber-500 rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:border-amber-500" id="mealCount" type="number" placeholder="Meal Count" />
+                            <input {...register("mealCount", { required: true, valueAsNumber: true, pattern:{value: /^(0|[1-9]\d*)(\.\d+)?$/}, })} className="shadow border appearance-none  shadow-amber-500 rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:border-amber-500" id="mealCount"  placeholder="Meal Count" />
                             {errors.mealCount && <p className="text-red-500 text-xs italic">Please add todays total meal.</p>}
                         </div>
 
