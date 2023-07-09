@@ -9,7 +9,7 @@ import { MdAccountCircle } from 'react-icons/md';
 
 const Nav = () => {
     const [loggedInUser] = useContext(UserContext);
-    const userEmail = JSON.parse(getFromStorage('userEmail'));
+    const userEmail = getFromStorage('userEmail');
     //const [userEmail, setUserEmail] = useState([])
     const [member, setMember] = useState([]);
     const baseUrl = process.env.BASE_URL;

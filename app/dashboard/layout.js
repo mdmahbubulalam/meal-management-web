@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 const DashboardLayout = ({children}) => {
     const router = useRouter()
     const [loggedInUser] = useContext(UserContext);
-    const userEmail = JSON.parse(getFromStorage('userEmail'))
+    const userEmail = getFromStorage('userEmail')
     console.log('fromLayout', userEmail)
     return (
       <section>
