@@ -10,23 +10,32 @@ import { useRouter } from 'next/navigation';
 const DashboardLayout = ({children}) => {
     const router = useRouter()
     const [loggedInUser] = useContext(UserContext);
-    const userEmail = getFromStorage('userEmail')
+    //const userEmail = getFromStorage('userEmail')
+    const userEmail = loggedInUser.email?loggedInUser.email : ''
     console.log('fromLayout', userEmail)
-    return (
-      <section>
-         { 
-         userEmail ?
-          <aside className="flex gap-6">
-              <SideBar/>
-              <div className="m-3 text-xl text-gray-900 font-semibold">
-                  {children}
-              </div>
-          </aside>
-          :
-          router.push('/')
-         }
-      </section>
-  )
-}
+
+
+    if(userEmail) {
+        return (
+            <section>
+                <aside className="flex gap-6">
+                    <SideBar/>
+                    <div className="m-3 text-xl text-gray-900 font-semibold">
+                        {children}
+                    </div>
+                </aside>
+            </section>
+        )
+    }else {
+        useEffect(() => {
+            router.push('/')
+        },[])
+    }
+
+    
+       
+    }
+   
+
 
 export default DashboardLayout

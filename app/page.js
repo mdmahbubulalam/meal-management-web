@@ -8,7 +8,8 @@ import { useRouter } from 'next/navigation';
 const Home = () => {
   const router = useRouter()
   const [loggedInUser] = useContext(UserContext);
-  const userEmail = JSON.parse(getFromStorage('userEmail'))
+  const userEmail = loggedInUser.email
+  //const userEmail = JSON.parse(getFromStorage('userEmail'))
 
   return (
     <section>

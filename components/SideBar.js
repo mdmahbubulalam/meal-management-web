@@ -6,13 +6,16 @@ import { GiMeal } from "react-icons/gi";
 import { FiLogOut } from "react-icons/fi";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { UserContext } from '@/context/Contex';
 
 const SideBar = () => {
   const router = useRouter();
   const [open, setOpen] = useState(true);
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext)
 
   const handleLogOut = () => {
-    localStorage.removeItem('userEmail')
+    //localStorage.removeItem('userEmail')
+    setLoggedInUser('')
     router.push('/')
   }
   

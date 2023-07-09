@@ -42,8 +42,8 @@ const SignIn = () => {
               email:email
             }
             setLoggedInUser(userEmail)
-            const memberEmail = JSON.stringify(userEmail.email)
-            saveToStorage('userEmail', memberEmail)
+            // const memberEmail = JSON.stringify(userEmail.email)
+            // saveToStorage('userEmail', memberEmail)
           
             console.log('User signed in successfully!');
             setLoading(false)
