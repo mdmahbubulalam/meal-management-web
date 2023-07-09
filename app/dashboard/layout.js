@@ -6,6 +6,7 @@ import SignIn from '../signIn/page';
 import SideBar from '@/components/SideBar';
 import { getFromStorage } from '@/context/LocalStorage';
 import { useRouter } from 'next/navigation';
+import Nav from '@/components/Nav';
 
 const DashboardLayout = ({children}) => {
     const router = useRouter()
@@ -17,7 +18,8 @@ const DashboardLayout = ({children}) => {
 
     if(userEmail) {
         return (
-            <section>
+            <section className='flex flex-col'>
+                <Nav/>
                 <aside className="flex gap-6">
                     <SideBar/>
                     <div className="m-3 text-xl text-gray-900 font-semibold">

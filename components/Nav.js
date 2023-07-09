@@ -14,9 +14,9 @@ const Nav = () => {
     //const [userEmail, setUserEmail] = useState([])
     const [member, setMember] = useState([]);
     const baseUrl = process.env.BASE_URL;
-    console.log('userEmail',userEmail)
+    console.log('userEmail',member)
 
-    const url = `${baseUrl}/users/findByEmail?email=${userEmail}`
+    const url = userEmail && `${baseUrl}/users/findByEmail?email=${userEmail}`
 
     useEffect(()=>{
         const fetchPost = async () => {

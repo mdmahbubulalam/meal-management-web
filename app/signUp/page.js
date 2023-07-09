@@ -1,4 +1,5 @@
 "use client"
+import Nav from '@/components/Nav';
 import Link from 'next/link';
 import React from 'react'
 import { useForm } from "react-hook-form";
@@ -42,6 +43,8 @@ const SignUp = () => {
     }
     };
     return (
+      <>
+      <Nav/>
       <section className='flex justify-center mt-6'>
         <div className="w-full max-w-xs">
             <form className="bg-white shadow-md shadow-amber-500 rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
@@ -75,6 +78,8 @@ const SignUp = () => {
             
         </div>
       </section>
+      </>
+      
         
         
     )

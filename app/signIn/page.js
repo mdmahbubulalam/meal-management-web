@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
 import { Spinner } from "@material-tailwind/react";
 import { saveToStorage } from '@/context/LocalStorage';
+import Nav from '@/components/Nav';
 
 
 
@@ -38,6 +39,7 @@ const SignIn = () => {
           });
     
           if (response.ok) {
+            
             const userEmail = {
               email:email
             }
@@ -47,7 +49,8 @@ const SignIn = () => {
           
             console.log('User signed in successfully!');
             setLoading(false)
-              router.push(`/dashboard/dashboard`);
+            router.push(`/dashboard/dashboard`);
+
             // Additional actions after successful sign-in, such as navigating to another screen
           } else {
             setLoggedInUser('')
@@ -64,8 +67,10 @@ const SignIn = () => {
         }
     };
     return (
-        <section className='flex justify-center mt-6'>
-         
+      <>
+      <Nav/>
+      <section className='flex justify-center mt-6'>
+            
             <div className="w-full max-w-xs ">
                 {
                 loading && <div className="flex justify-center"><Spinner className="h-10 w-10 text-blue-700/20" /></div>
@@ -95,6 +100,8 @@ const SignIn = () => {
                 
             </div>
         </section>
+      </>
+        
         
         
     )
