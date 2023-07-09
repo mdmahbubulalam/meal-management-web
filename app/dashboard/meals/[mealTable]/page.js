@@ -36,6 +36,7 @@ const MealTable = () => {
         {
             name: 'Date',
             selector: row => row.date,
+            sortable: true,
         },
         {
             name: 'Name',
