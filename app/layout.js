@@ -1,4 +1,3 @@
-"use client"
 import Nav from '@/components/Nav';
 import './globals.css';
 import { Provider } from '@/context/Contex';
